@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.saipeng.mapper.PersonMapper">
+
+
+  <!--  getConditionsStudentListByMap -->
+  <select id="getConditionPersonListByMap" parameterType="hashmap" resultType="com.saipeng.pojo.Person">
+    select * from person
+    <where>
+      <if test="name!=null">
+        instr(name,#{name})
+      </if>
+    </where>
+    limit #{startIndex},#{pageSize}
+
+  </select>
+
+  <!--  getConditionsStudentListCountByMap -->
+  <select id="getConditionPersonCountByMap" parameterType="hashmap" resultType="Integer">
+    select count(*) from person
+    <where>
+      <if test="name!=null">
+        instr(name,#{name})
+      </if>
+    </where>
+  </select>
+
+  <insert id="addOnePerson" parameterType="com.saipeng.pojo.Person">
+      insert into person(name,sex) value(
+      #{name},#{sex}
+      )
+   </insert>
+
+  <select id="getById" resultType="com.saipeng.pojo.Person">
+     select * from person  where id=#{id}
+   </select>
+
+  <!--&lt;!&ndash;  save 后面的是走个形式&ndash;&gt;
+  <insert id="save" parameterType="com.bawei.demo.dto.Student">
+   insert into student(sname,sex,age,bid) value(
+    #{sname},#{sex},#{age},#{bid}
+    )
+ </insert>
+
+  <update id="updateNumByBid" parameterType="com.bawei.demo.dto.Student">
+     update clazz set num=num+1 where bid=#{bid}
+   </update>
+
+  &lt;!&ndash; ps
+    delete from student where sid in (3,4)
+    &ndash;&gt;
+  <delete id="ps" parameterType="hashmap">
+ 	   delete from student where sid in (${sids})
+ 	</delete>
+
+  <select id="getById" resultType="com.bawei.demo.dto.Student" >
+		select s.*,c.bname from student s left join clazz c on s.bid = c.bid where s.sid = #{sid}
+	</select>
+  <update id="updateAll" >
+		update student set sname = #{sname} , sex = #{sex},age = #{age},bid = #{bid} where sid = #{sid}
+	</update>-->
+</mapper>
